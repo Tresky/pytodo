@@ -1,15 +1,14 @@
 class TodoItem:
-    task = ''
-    description = ''
-    finished = False
+    _task = ''
+    _description = ''
+    _finished = False
 
-    def __init__(self, obj):
-        print('CONSTRUCTING TodoItem')
-        self.task = obj.task
-        self.description = obj.description
-        self.finished = obj.finished
+    def __init__(self, yaml):
+        self._task = yaml['task']
+        self._description = yaml['description']
+        self._finished = yaml['finished']
 
     def display(self, idx, show_desc):
-        print(idx + '. [' + ('x' if self.finished else ' ') + ']' + self.task)
+        print(str(idx) + '. [' + ('x' if self._finished else ' ') + '] ' + self._task)
         if show_desc:
-            print('\t-', self.description)
+            print('\t-', self._description)

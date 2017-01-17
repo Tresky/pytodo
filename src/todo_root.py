@@ -1,17 +1,15 @@
-import yaml
+from src.yaml import YAML
+from os.path import expanduser
+from src.adapters.yaml_adapter import YamlAdapter
 
 class TodoRoot:
-    config = yaml.load(open('./config.yml', 'r'))
-    lists = []
+    _config = YAML.load('./config.yml')
+    _lists = []
 
     def __init__(self):
-        print('CONSTRUCTING TodoRoot')
-        print(self.config)
-
         # Load the list(s) into memory
-        # adapter = chooseAdapter()
-        # adapter.loadAllLists()
-        # adapter.loadList('testlist')
+        self._adapter = self._choose_adapter()
+        self._lists = [self._adapter.load_list('testlist')]
 
     def init(self, args):
         print('INITIALIZE ->', args.list)
@@ -28,3 +26,7 @@ class TodoRoot:
     def remove(self, args):
         print('REMOVE LIST ->', args.list)
         print(args)
+
+    def _choose_adapter(self):
+        adapter = YamlAdapter()
+        return adapter

@@ -23,6 +23,27 @@ class TodoRoot:
         print('SHOW LIST ->', args.list)
         print(args)
 
+        # Print a specific list
+        if args.list:
+            result = None
+            for list in self._lists:
+                if list.is_named(args.list):
+                    result = list
+
+            if result:
+                result.display(args.desc)
+            else:
+                print('No list named \'' + args.list + '\' exists.')
+
+        # Print a list of the initialized lists
+        else:
+            lists = YAML.load('~/.todo/lists.yml')
+
+            print('Initialized Lists')
+            print('-----------------')
+            for list in lists:
+                print(list)
+
     def remove(self, args):
         print('REMOVE LIST ->', args.list)
         print(args)

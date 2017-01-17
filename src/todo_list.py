@@ -6,8 +6,12 @@ class TodoList:
 
     def __init__(self, yaml):
         self._name = yaml['name']
-        for task in yaml['tasks']:
-            self._todos.append(TodoItem(task))
+        if yaml['tasks']:
+            for task in yaml['tasks']:
+                self._todos.append(TodoItem(task))
+        else:
+            self._todos = []
+
     def package_data(self):
         data = {
             'name': self._name,

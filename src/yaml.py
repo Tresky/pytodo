@@ -2,10 +2,6 @@ import yaml
 from os.path import expanduser
 
 class YAML:
-    # def __init__(self, filepath):
-    #     print('CONSTRUCTING YAML FILE')
-    #     self.load(filepath)
-
     @staticmethod
     def load(filepath):
         print('Loading file \'' + filepath + '\'')

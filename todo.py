@@ -1,101 +1,45 @@
 #!/usr/bin/env python3
 
 import sys
+import argparse
 
 def init(args):
-    if len(args) <= 1:
-        print("Must provide name of todo list")
-        exit(1)
+    print('INITIALIZE')
+    print(args)
 
-    print("Initializing: " + args[1])
+def add(args):
+    print('ADD TASK')
+    print(args)
 
-def list():
-    print("Listing")
+def list(args):
+    print('LIST')
+    print(args)
 
-def default():
-    print("Command not found")
+# Create the argument parser
+parser = argparse.ArgumentParser()
+subparsers = parser.add_subparsers(help='sub-command help')
 
+# Each subcommand has its own sub-parsers.
+# Arguments with dashes (-, --) are considered optional.
+# Arguments sans-dashes are required to be present.
 
-def execute(command):
-    return {
-    "init": init,
-    "i": init,
-    "list": list
-    }.get(command, default)
+# Add a parser for the 'init' subcommand
+init_parser = subparsers.add_parser('init', aliases=['i'], help='init help')
+init_parser.add_argument('list', type=str, help='Name of the list to initialize')
+init_parser.set_defaults(func=init)
 
-args = sys.argv[1:]
-execute(args[0])(args)
+# Add a parser for the 'add' subcommand
+add_parser = subparsers.add_parser('add', aliases=['a'], help='add help')
+add_parser.add_argument('list', type=str, help='Name of the list to add to')
+add_parser.add_argument('task', type=str, help='What is the task that needs to be done?')
+add_parser.add_argument('-i', action='store_true', help='Open the interactive task editor')
+add_parser.set_defaults(func=add)
 
+# Add a parser for the 'list' subcommand
+list_parser = subparsers.add_parser('list', aliases=['ls'], help='list help')
+list_parser.add_argument('--list', type=str, help='Display the contents of a todo list')
+list_parser.set_defaults(func=list)
 
-
-
-# parser = argparse.ArgumentParser()
-# >>> subparsers = parser.add_subparsers()
-# >>> checkout = subparsers.add_parser('checkout', aliases=['co'])
-# >>> checkout.add_argument('foo')
-# >>> parser.parse_args(['checkout', 'bar'])
-# Namespace(foo='bar')
-
-# class Todo(object):
-#     def __init__(self):
-#         parser = argparse.ArgumentParser(
-#             description='A simple command line todo application.',
-#             usage='''Usage Example'''
-#         )
-#
-#         # subparsers = parser.add_subparsers()
-#         # init = subparsers.add_parser('init', aliases=['i'])
-#         # init.add_argument('list')
-#
-#         parser.add_argument('command', help='Subcommand to run')
-#
-#         args = parser.parse_args(sys.argv[1:2])
-#         # if not hasattr(self, args.command):
-#         #     print("Bad Command")
-#         #     parser.print_help()
-#         #     exit(1)
-#         getattr(self, args.command)()
-#
-#     def init(self):
-#         parser = argparse.ArgumentParser(
-#             description='Initialize a new todo list'
-#         )
-#
-#         parser.add_argument('list')
-#
-#         args = parser.parse_args(sys.argv[2:])
-#         print('Initializing list: ' + sys.argv[2])
-#
-#     def list(self):
-#         parser = argparse.ArgumentParser(
-#             description='List all todo lists to the console'
-#         )
-#
-#         parser.add_argument('list')
-#
-#         args = parser.parse_args(sys.argv[2:])
-#         print('Listing lists: ' + sys.argv[2])
-#
-#
-# if __name__ == '__main__':
-#     Todo()
-
-# import yaml
-# import sys, getopt
-#
-# print("Starting Application")
-#
-# # opt, args = getopt.getopt(sys.argv[1:], '')
-#
-# # print(opt, args)
-#
-# # for opt, arg in args
-#
-# args = sys.argv[1:]
-# for arg in args:
-#     if arg in ("init", "i"):
-#         print("Initialize")
-#     elif arg in ("list", "ls"):
-#         print("List")
-#     else:
-#         print("Invalid Command")
+# Parse the arguments and call the correct function
+args = parser.parse_args(sys.argv[1:])
+args.func(args)

@@ -8,6 +8,16 @@ class TodoList:
         self._name = yaml['name']
         for task in yaml['tasks']:
             self._todos.append(TodoItem(task))
+    def package_data(self):
+        data = {
+            'name': self._name,
+            'tasks': []
+        }
+
+        for todo in self._todos:
+            data['tasks'].append(todo.package_data())
+
+        return data
 
     def is_named(self, name):
         return self._name == name

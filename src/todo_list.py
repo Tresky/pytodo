@@ -1,11 +1,9 @@
 from src.todo_item import TodoItem
 
 class TodoList:
-    _name = ''
-    _todos = []
-
     def __init__(self, yaml):
         self._name = yaml['name']
+        self._todos = []
         if yaml['tasks']:
             for task in yaml['tasks']:
                 self._todos.append(TodoItem(task))

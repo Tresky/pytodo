@@ -1,8 +1,4 @@
 class TodoItem:
-    _task = ''
-    _description = ''
-    _finished = False
-
     def __init__(self, yaml):
         self._task = yaml['task']
         self._description = yaml['description']

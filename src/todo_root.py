@@ -4,13 +4,12 @@ from src.todo_list import TodoList
 
 class TodoRoot:
     _config = YAML.load('./config.yml')
-    _lists = []
-    _changed = False
 
     def __init__(self):
         # Load the list(s) into memory
         self._adapter = self._choose_adapter()
         self._lists = self._adapter.load_all_lists()
+        self._changed = False
 
     # def __del__(self):
         # If there are any changes to be saved, save them

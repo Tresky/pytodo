@@ -59,10 +59,7 @@ class TodoRoot:
 
         # Print a specific list
         if args.list:
-            result = None
-            for list in self._lists:
-                if list.is_named(args.list):
-                    result = list
+            result = self._find_list(args.list)
 
             if result:
                 result.display(args.desc)
@@ -85,3 +82,10 @@ class TodoRoot:
     def _choose_adapter(self):
         adapter = YamlAdapter()
         return adapter
+
+    def _find_list(self, list_name):
+        result = None
+        for l in self._lists:
+            if l.is_named(list_name):
+                result = l
+        return result

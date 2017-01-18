@@ -36,6 +36,7 @@ class TodoList:
         return self._name == name
 
     def display(self, show_desc):
+        print('Todos for \'{name}\''.format(name=self._name))
         if len(self._todos):
             for i, item in enumerate(self._todos):
                 item.display(i, show_desc)

@@ -1,5 +1,5 @@
 from src.yaml import YAML
-from src.adapters.yaml_adapter import YamlAdapter
+from src.storage_adapters.yaml_adapter import YamlAdapter
 from src.todo_list import TodoList
 
 class TodoRoot:
@@ -22,9 +22,6 @@ class TodoRoot:
             # self._adapter.store_lists(self._lists)
 
     def init(self, args):
-        print('INITIALIZE ->', args.list)
-        print(args)
-
         # Check if list exists with given name
         already_exists = False
         for list in self._lists:
@@ -50,12 +47,9 @@ class TodoRoot:
         self._adapter.store_lists(self._lists)
 
     def add(self, args):
-        print('ADD TASK ->', args.list, ':', args.task)
-        print(args)
-
         list = self._find_list(args.list)
         if list:
-            list.add_todo(args.task, 'new description :)')
+            list.add_todo(args.task, 'New Description :]')
 
             self._changed = True
 
@@ -65,9 +59,6 @@ class TodoRoot:
             print('No list named \'' + args.list + '\' exists.')
 
     def list(self, args):
-        print('SHOW LIST ->', args.list)
-        print(args)
-
         # Print a specific list
         if args.list:
             result = self._find_list(args.list)
@@ -87,9 +78,6 @@ class TodoRoot:
                 print(list)
 
     def remove(self, args):
-        print('REMOVE LIST ->', args.list)
-        print(args)
-
         ##! Need to make this actually delete the file
         ##! associated with the todo list, too
 

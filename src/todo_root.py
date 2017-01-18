@@ -90,6 +90,20 @@ class TodoRoot:
         print('REMOVE LIST ->', args.list)
         print(args)
 
+        ##! Need to make this actually delete the file
+        ##! associated with the todo list, too
+
+        if not args.item:
+            index = self._find_list_index(args.list)
+            if index:
+                self._lists.pop(index)
+        else:
+            result = self._find_list(args.list)
+            result.remove_todo(args.item)
+
+        ## Temporary; see __del__
+        self._adapter.store_lists(self._lists)
+
     def _choose_adapter(self):
         adapter = YamlAdapter()
         return adapter
@@ -100,3 +114,10 @@ class TodoRoot:
             if l.is_named(list_name):
                 result = l
         return result
+
+    def _find_list_index(self, list_name):
+        index = None
+        for idx, l in enumerate(self._lists):
+            if l.is_named(list_name):
+                index = idx
+        return index

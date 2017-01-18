@@ -36,6 +36,7 @@ list_parser.set_defaults(func=root.list)
 # Add a parser for the 'remove' subcommand
 remove_parser = subparsers.add_parser('remove', aliases=['rm'], help='remove help')
 remove_parser.add_argument('list', type=str, help='Name of the list to delete')
+remove_parser.add_argument('--item', type=int, help='Index of task to remove from list')
 remove_parser.set_defaults(func=root.remove)
 
 # Parse the arguments and call the correct function

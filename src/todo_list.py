@@ -18,6 +18,9 @@ class TodoList:
         }
         self._todos.append(TodoItem(todo))
 
+    def remove_todo(self, index):
+        self._todos.pop(index)
+
     def package_data(self):
         data = {
             'name': self._name,

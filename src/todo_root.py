@@ -7,7 +7,7 @@ class TodoRoot:
 
     def __init__(self):
         # Load the list(s) into memory
-        self._adapter = self._choose_adapter()
+        self._adapter = self._choose_storage_adapter()
         self._lists = self._adapter.load_all_lists()
         self._changed = False
 
@@ -23,12 +23,7 @@ class TodoRoot:
 
     def init(self, args):
         # Check if list exists with given name
-        already_exists = False
-        for list in self._lists:
-            if list.is_named(args.list):
-                already_exists = True
-                break
-        if already_exists:
+        if self._find_list(args.list) == None:
             print('List with name \'' + args.list + '\' already exists.')
             return
 
@@ -47,7 +42,7 @@ class TodoRoot:
         self._adapter.store_lists(self._lists)
 
     def add(self, args):
-        list = self._find_list(args.list)
+        list = self._get_list(args.list)
         if list:
             list.add_todo(args.task, 'New Description :]')
 
@@ -61,7 +56,7 @@ class TodoRoot:
     def list(self, args):
         # Print a specific list
         if args.list:
-            result = self._find_list(args.list)
+            result = self._get_list(args.list)
 
             if result:
                 result.display(args.d)
@@ -82,11 +77,11 @@ class TodoRoot:
         ##! associated with the todo list, too
 
         if not args.item:
-            index = self._find_list_index(args.list)
+            index = self._find_list(args.list)
             if index:
                 self._lists.pop(index)
         else:
-            result = self._find_list(args.list)
+            result = self._get_list(args.list)
             result.remove_todo(args.item)
 
         ## Temporary; see __del__
@@ -96,7 +91,7 @@ class TodoRoot:
         print('Finishing Task', args)
 
         if args.list:
-            result = self._find_list(args.list)
+            result = self._get_list(args.list)
 
             func = (result.finish_task if not args.u else result.unfinish_task)
             func(args.task_idx)
@@ -105,10 +100,12 @@ class TodoRoot:
             self._adapter.store_lists(self._lists)
 
     def _choose_adapter(self):
+    def _choose_storage_adapter(self):
         adapter = YamlAdapter()
         return adapter
 
     def _find_list(self, list_name):
+    def _get_list(self, list_name):
         result = None
         for l in self._lists:
             if l.is_named(list_name):
@@ -116,6 +113,7 @@ class TodoRoot:
         return result
 
     def _find_list_index(self, list_name):
+    def _find_list(self, list_name):
         index = None
         for idx, l in enumerate(self._lists):
             if l.is_named(list_name):

@@ -25,5 +25,8 @@ class TodoList:
         return self._name == name
 
     def display(self, show_desc):
-        for i, item in enumerate(self._todos):
-            item.display(i, show_desc)
+        if len(self._todos):
+            for i, item in enumerate(self._todos):
+                item.display(i, show_desc)
+        else:
+            print('No tasks in this list.')

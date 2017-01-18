@@ -1,9 +1,11 @@
 from src.yaml import YAML
-from src.adapters.storage_adapter import StorageAdapter
+from src.storage_adapters.storage_adapter import StorageAdapter
 from src.todo_list import TodoList
+from src.logger import Logger
 
 class YamlAdapter(StorageAdapter):
     def load_all_lists(self):
+        Logger.debug('Loading YAML lists')
         lists_file = YAML.load('~/.todo/lists.yml')
 
         lists = []
@@ -12,10 +14,10 @@ class YamlAdapter(StorageAdapter):
         return lists
 
     def load_list(self, list):
-        print('Loading YAML List', list)
         return TodoList(YAML.load('~/.todo/' + list + '.yml'))
 
     def store_lists(self, lists):
+        Logger.debug('Storing YAML lists')
         list_names = []
         for list in lists:
             list_names.append(list._name)
@@ -24,5 +26,4 @@ class YamlAdapter(StorageAdapter):
         YAML.write('~/.todo/lists.yml', list_names)
 
     def store_list(self, list):
-        print('Storing List:', list._name)
         YAML.write('~/.todo/' + list._name + '.yml', list.package_data())

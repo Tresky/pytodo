@@ -30,7 +30,7 @@ add_parser.set_defaults(func=root.add)
 # Add a parser for the 'list' subcommand
 list_parser = subparsers.add_parser('list', aliases=['ls'], help='list help')
 list_parser.add_argument('--list', type=str, help='Display the contents of a todo list')
-list_parser.add_argument('--desc', action='store_true', help='Show the descriptions of each task')
+list_parser.add_argument('-d', action='store_true', help='Show the descriptions of each task')
 list_parser.set_defaults(func=root.list)
 
 # Add a parser for the 'remove' subcommand

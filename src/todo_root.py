@@ -64,7 +64,7 @@ class TodoRoot:
             result = self._find_list(args.list)
 
             if result:
-                result.display(args.desc)
+                result.display(args.d)
             else:
                 print('No list named \'' + args.list + '\' exists.')
 

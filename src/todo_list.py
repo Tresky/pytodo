@@ -10,6 +10,14 @@ class TodoList:
         else:
             self._todos = []
 
+    def add_todo(self, task, description):
+        todo = {
+            'task': task,
+            'description': description,
+            'finished': False
+        }
+        self._todos.append(TodoItem(todo))
+
     def package_data(self):
         data = {
             'name': self._name,

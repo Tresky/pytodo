@@ -53,6 +53,17 @@ class TodoRoot:
         print('ADD TASK ->', args.list, ':', args.task)
         print(args)
 
+        list = self._find_list(args.list)
+        if list:
+            list.add_todo(args.task, 'new description :)')
+
+            self._changed = True
+
+            ## Temporary; see __del__
+            self._adapter.store_lists(self._lists)
+        else:
+            print('No list named \'' + args.list + '\' exists.')
+
     def list(self, args):
         print('SHOW LIST ->', args.list)
         print(args)

@@ -95,6 +95,15 @@ class TodoRoot:
     def finish(self, args):
         print('Finishing Task', args)
 
+        if args.list:
+            result = self._find_list(args.list)
+
+            func = (result.finish_task if not args.u else result.unfinish_task)
+            func(args.task_idx)
+
+            ## Temporary; see __del__
+            self._adapter.store_lists(self._lists)
+
     def _choose_adapter(self):
         adapter = YamlAdapter()
         return adapter

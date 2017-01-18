@@ -21,6 +21,12 @@ class TodoList:
     def remove_todo(self, index):
         self._todos.pop(index)
 
+    def finish_task(self, index):
+        self._todos[index].finish()
+
+    def unfinish_task(self, index):
+        self._todos[index].unfinish()
+
     def package_data(self):
         data = {
             'name': self._name,

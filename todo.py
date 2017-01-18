@@ -43,6 +43,7 @@ remove_parser.set_defaults(func=root.remove)
 do_parser = subparsers.add_parser('do', aliases=['d'], help='do help')
 do_parser.add_argument('list', type=str, help='Name of the list to execute on')
 do_parser.add_argument('task_idx', type=int, help='Index of the task to mark \'finish\'')
+do_parser.add_argument('-u', action='store_true', help='Unmark the task as finished; negates functionality')
 do_parser.set_defaults(func=root.finish)
 
 # Parse the arguments and call the correct function

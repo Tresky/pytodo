@@ -11,6 +11,12 @@ class TodoItem:
             'finished': self._finished
         }
 
+    def finish(self):
+        self._finished = True
+
+    def unfinish(self):
+        self._finished = False
+
     def display(self, idx, show_desc):
         print(str(idx) + '. [' + ('x' if self._finished else ' ') + '] ' + self._task)
         if show_desc:

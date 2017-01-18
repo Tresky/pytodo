@@ -1,4 +1,4 @@
-from src.yaml import YAML
+from src.utils.yaml import YAML
 from src.storage_adapters.yaml_adapter import YamlAdapter
 from src.todo_list import TodoList
 

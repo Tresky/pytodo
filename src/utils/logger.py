@@ -1,4 +1,4 @@
-from src.environment import Env
+from src.utils.environment import Env
 
 class Logger:
     @staticmethod

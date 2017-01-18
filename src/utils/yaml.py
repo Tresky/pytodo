@@ -1,14 +1,11 @@
 import yaml
 import re
 from os.path import expanduser
-from src.logger import Logger
+from src.utils.logger import Logger
 
 def process_filepath(filepath):
     # If the file is absolute, expand the path
-    # if filepath[0] == '~':
-    expanded_user = expanduser('~')
-    filepath = re.sub('~', expanded_user, filepath)
-        # filepath = expanduser('~') + filepath[1:]
+    filepath = re.sub('~', expanduser('~'), filepath)
     return filepath
 
 class YAML:

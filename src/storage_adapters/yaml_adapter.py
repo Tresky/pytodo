@@ -1,7 +1,7 @@
-from src.yaml import YAML
+from src.utils.yaml import YAML
 from src.storage_adapters.storage_adapter import StorageAdapter
 from src.todo_list import TodoList
-from src.logger import Logger
+from src.utils.logger import Logger
 
 class YamlAdapter(StorageAdapter):
     def load_all_lists(self):

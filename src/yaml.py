@@ -1,5 +1,6 @@
 import yaml
 from os.path import expanduser
+from src.logger import Logger
 
 def fix_filepath(filepath):
     # If the file is absolute, expand the path
@@ -14,10 +15,10 @@ class YAML:
 
     @staticmethod
     def load(filepath):
-        print('Loading file \'' + filepath + '\'')
-        return yaml.load(open(fix_filepath(filepath), 'r'))
+        Logger.debug('Loading file \'' + filepath + '\'')
+        return yaml.load(open(process_filepath(filepath), 'r'))
 
     @staticmethod
     def write(filepath, data):
-        print('Writing file \'' + filepath + '\'', data)
-        yaml.dump(data, open(fix_filepath(filepath), 'w'))
+        Logger.debug('Writing file \'' + filepath + '\'')
+        yaml.dump(data, open(process_filepath(filepath), 'w'))

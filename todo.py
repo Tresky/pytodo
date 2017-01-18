@@ -39,6 +39,12 @@ remove_parser.add_argument('list', type=str, help='Name of the list to delete')
 remove_parser.add_argument('item', type=int, nargs='?', help='Index of task to remove from list')
 remove_parser.set_defaults(func=root.remove)
 
+# Add a parser for the 'do' subcommand
+do_parser = subparsers.add_parser('do', aliases=['d'], help='do help')
+do_parser.add_argument('list', type=str, help='Name of the list to execute on')
+do_parser.add_argument('task_idx', type=int, help='Index of the task to mark \'finish\'')
+do_parser.set_defaults(func=root.finish)
+
 # Parse the arguments and call the correct function
 args = parser.parse_args(sys.argv[1:])
 

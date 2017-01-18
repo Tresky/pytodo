@@ -92,6 +92,9 @@ class TodoRoot:
         ## Temporary; see __del__
         self._adapter.store_lists(self._lists)
 
+    def finish(self, args):
+        print('Finishing Task', args)
+
     def _choose_adapter(self):
         adapter = YamlAdapter()
         return adapter

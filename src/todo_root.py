@@ -2,9 +2,14 @@ from src.utils.yaml import YAML
 from src.storage_adapters.yaml_adapter import YamlAdapter
 from src.todo_list import TodoList
 
+# @class TodoRoot
+# @desc Root level class that represents the entirety of the
+# application. This has functions that are called from the
+# argument parser to handle the subcommands in the CLI tool.
 class TodoRoot:
     _config = YAML.load('./config.yml')
 
+    # Constructor: Set the default values for the instance
     def __init__(self):
         # Load the list(s) into memory
         self._adapter = self._choose_storage_adapter()
@@ -21,6 +26,8 @@ class TodoRoot:
         # if self._changed:
             # self._adapter.store_lists(self._lists)
 
+    # Subcommand: Initialize an empty list with a given name.
+    # @param args Object of the arguments being passed in from the CLI
     def init(self, args):
         # Check if list exists with given name
         if self._find_list(args.list) == None:
@@ -41,6 +48,8 @@ class TodoRoot:
         ## Temporary; see __del__
         self._adapter.store_lists(self._lists)
 
+    # Subcommand: Add a task to a specified list.
+    # @param args Object of the arguments being passed in from the CLI
     def add(self, args):
         list = self._get_list(args.list)
         if list:
@@ -53,6 +62,8 @@ class TodoRoot:
         else:
             print('No list named \'' + args.list + '\' exists.')
 
+    # Subcommand: Display a list of the lists present or the tasks in a list.
+    # @param args Object of the arguments being passed in from the CLI
     def list(self, args):
         # Print a specific list
         if args.list:
@@ -72,6 +83,8 @@ class TodoRoot:
             for list in lists:
                 print(list)
 
+    # Subcommand: Remove an entire list or a task from a list.
+    # @param args Object of the arguments being passed in from the CLI
     def remove(self, args):
         ##! Need to make this actually delete the file
         ##! associated with the todo list, too
@@ -87,9 +100,9 @@ class TodoRoot:
         ## Temporary; see __del__
         self._adapter.store_lists(self._lists)
 
+    # Subcommand: Mark a task as finished in a specific list.
+    # @param args Object of the arguments being passed in from the CLI
     def finish(self, args):
-        print('Finishing Task', args)
-
         if args.list:
             result = self._get_list(args.list)
 
@@ -99,12 +112,15 @@ class TodoRoot:
             ## Temporary; see __del__
             self._adapter.store_lists(self._lists)
 
-    def _choose_adapter(self):
+    # Discover which storage adapter to use based on settings.
+    # @return Object instance of the correct storage adapter
     def _choose_storage_adapter(self):
         adapter = YamlAdapter()
         return adapter
 
-    def _find_list(self, list_name):
+    # Retrieve a list based on the name of the list.
+    # @param list_name Name of the list to retrieve
+    # @return Returns the list object if found, None otherwise
     def _get_list(self, list_name):
         result = None
         for l in self._lists:
@@ -112,7 +128,9 @@ class TodoRoot:
                 result = l
         return result
 
-    def _find_list_index(self, list_name):
+    # Retrieve the index of a list based on the name of the list.
+    # @param list_name Name of the list to find
+    # @return Return the index of the list if found, None otherwise
     def _find_list(self, list_name):
         index = None
         for idx, l in enumerate(self._lists):
